@@ -1,0 +1,41 @@
+>>> from blog.models import Post
+>>> from django.contrib.auth.models import User
+>>> Post.objects.all()
+<QuerySet [<Post: Blog 1>]>
+>>> user = User.objects.filter(username='ziom').first()
+>>> user
+<User: ziom>
+>>> post_2 = Post(title='Blog 2', content='Secend Post Content', author_id=user.id)
+>>> post_2.save()
+>>> Post.objects.all()
+<QuerySet [<Post: Blog 1>, <Post: Blog 2>]>
+>>> post = Post.objects.first()
+>>> post.content
+'Fisrt Post Content !'
+>>> post
+<Post: Blog 1>
+>>> post.date_posted
+datetime.datetime(2019, 2, 21, 12, 58, 56)
+>>> post = Post.objects.get(id=1)
+>>> post.content
+'Fisrt Post Content !'
+>>> post.author.email
+'ziom@gj.pl'
+>>> post.author.password
+'pbkdf2_sha256$100000$JJFfzFzo26k9$U30gFgckdbtQ85bMs8CvqneuK9XRFMc8XobxiNYn2ko='
+>>> post.author
+<User: ziom>
+>>> post.author.email
+'ziom@gj.pl'
+>>> post.author.password
+'pbkdf2_sha256$100000$JJFfzFzo26k9$U30gFgckdbtQ85bMs8CvqneuK9XRFMc8XobxiNYn2ko='
+>>> user
+<User: ziom>
+>>> user.post_set
+<django.db.models.fields.related_descriptors.create_reverse_many_to_one_manager.<locals>.RelatedManager object at 0x7f0912999fd0>
+>>> user.post_set.all()
+<QuerySet [<Post: Blog 1>, <Post: Blog 2>]>
+>>> user.post_set.create(title='Blog 3', content='Third Post Content!')
+<Post: Blog 3>
+>>> Post.objects.all()
+<QuerySet [<Post: Blog 1>, <Post: Blog 2>, <Post: Blog 3>]>
